@@ -1,110 +1,23 @@
-# 📚 StudyAI — AI Study Assistant
+# StudyAI — AI Study Assistant
 
-StudyAI is a modern AI-powered study assistant designed to help students learn faster and more effectively.
+Full-stack Next.js 16 + PostgreSQL (Drizzle ORM) study platform: upload notes → AI summary → quizzes → flashcards → grounded Q&A chat → progress analytics.
 
-## ✨ Features
-
-* 📄 Upload study notes
-* 🧠 AI-generated summaries
-* ❓ AI-generated quizzes
-* 🃏 Interactive flashcards
-* 💬 Ask AI questions about your notes
-* 📊 Track learning progress
-* 🔐 Secure user accounts
-* 🌙 Dark mode
-* 📱 Responsive design
-
-## 🚀 How It Works
-
-1. Create an account
-2. Upload your study materials
-3. Let AI analyze your notes
-4. Generate a summary
-5. Create quizzes and flashcards
-6. Ask questions about your materials
-7. Track your learning progress
-
-## 🛠️ Tech Stack
-
-* Next.js
-* TypeScript
-* Tailwind CSS
-* PostgreSQL
-* Prisma
-* AI API
-* Authentication
-
-## 📂 Project Structure
-
-```text
-Study-AI/
-├── app/
-├── components/
-├── public/
-├── lib/
-├── prisma/
-├── package.json
-└── README.md
-```
-
-## ⚙️ Installation
-
-Clone the repository:
-
+## Quick start
 ```bash
-git clone https://github.com/murodjonnurmahmatov34-byte/Study-AI.git
-```
-
-Enter the project directory:
-
-```bash
-cd Study-AI
-```
-
-Install dependencies:
-
-```bash
+cp .env.example .env         # fill in DATABASE_URL and (optionally) AI / Google keys
 npm install
-```
-
-Create a `.env.local` file and add the required environment variables.
-
-Start the development server:
-
-```bash
+npm run db:push              # apply schema (or `npm run db:migrate` to use drizzle/ migrations)
+npm run db:seed              # demo account: demo@studyai.app / demo1234
 npm run dev
 ```
 
-Then open:
+## AI provider
+Set `AI_PROVIDER` (`openai` | `anthropic` | `openai-compatible`), `AI_API_KEY`, `AI_MODEL`, and optionally `AI_BASE_URL`.
+Without a key the app uses a local extractive engine so every feature still works end-to-end.
 
-```text
-http://localhost:3000
-```
-
-## 🔒 Environment Variables
-
-Never upload API keys or passwords to GitHub.
-
-Use a `.env.local` file for private environment variables.
-
-Example:
-
-```env
-DATABASE_URL=
-AI_API_KEY=
-AUTH_SECRET=
-```
-
-## 🎯 Future Improvements
-
-* AI-powered study plans
-* More quiz types
-* Advanced analytics
-* Study streaks
-* Personalized recommendations
-* Mobile application
-* Collaborative study rooms
-
-## 📄 License
-
-This project is for educational and development purposes.
+## Structure
+- `src/app/(auth)` — login / register / forgot & reset password
+- `src/app/(dashboard)` — protected app pages (dashboard, notes, subjects, chat, quiz, flashcards, progress, settings)
+- `src/app/api` — route handlers (auth, notes, upload, quiz, flashcards, chat, settings)
+- `src/lib` — `auth.ts`, `ai.ts`, `progress.ts`, `files.ts`, `validation.ts`, `utils.ts`
+- `src/db/schema.ts` — Drizzle schema; `drizzle/` — generated SQL migrations; `scripts/seed.ts` — seed data
